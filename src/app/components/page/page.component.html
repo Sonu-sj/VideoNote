@@ -1,0 +1,25 @@
+<div class="pageClass">
+  <nav mat-tab-nav-bar>
+    <div mat-tab-link *ngFor="let Page of notes.Pages" [routerLink]="['../pages', Page.id]"   routerLinkActive #rla="routerLinkActive"
+    [active]="rla.isActive">
+
+          <p>{{Page.Title}} {{Page.id}}</p>
+
+        </div>
+
+
+<div mat-tab-link>
+
+              <mat-icon (click)="createPage($event)">add</mat-icon>
+          </div>
+
+
+        </nav>
+        <router-outlet>
+
+        </router-outlet>
+<p>
+    <textarea rows="14" cols="50">Page works
+    </textarea>
+</p>
+</div>

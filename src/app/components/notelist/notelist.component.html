@@ -1,0 +1,5 @@
+<div>{{notes[0]|async}}</div>
+<div>Test</div>
+<mat-nav-list *ngFor="let note of notes|async">
+  <a mat-list-item [routerLink]="['/notes', note.id]" >{{note.Title}}</a>
+</mat-nav-list>
