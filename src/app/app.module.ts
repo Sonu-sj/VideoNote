@@ -15,7 +15,9 @@ import{NoteService} from './services/note-service.service';
 import { PagelistComponent } from './components/pagelist/pagelist.component';
 import { NotelistComponent } from './components/notelist/notelist.component';
 import { PageDataComponent } from './components/page-data/page-data.component';
-
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +37,8 @@ import { PageDataComponent } from './components/page-data/page-data.component';
       delay: 0
     }),
     RouterModule.forRoot(routes),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     BrowserAnimationsModule,
     MatSidenavModule,
     MatToolbarModule,

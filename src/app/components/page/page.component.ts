@@ -13,7 +13,7 @@ export class PageComponent implements OnInit {
   constructor() {
 
   }
-
+  maxlength =0;
   ngOnInit(){
     //console.log(this.notes)
     console.log("init")
@@ -21,17 +21,32 @@ export class PageComponent implements OnInit {
   }
 
   createPage(val){
+      var len = this.pageHeaders.length;
+  this.maxlength = this.pageHeaders.length;
+  let NewPage = this.pageHeaders.find((item,index)=>{
+  return index==len-1
+  })
     val.stopPropagation();
     let pageData = {Title:"Untitled"};
+    console.log(this.maxlength);
+    this.addData.emit([{
+    Title:"Test",
+    id:this.maxlength +1
+  }]);
+}
 
-    this.addData.emit({Pages:[{
-    Title:"Test"
-  }]});
-
-
+editPageTitle(i)
+{ 
+  console.log(this.pageHeaders[i]);
+  console.log("editing");
+   let editDiv = this.pageHeaders.find((item,index)=>{
+  return index==i;
+  })
+  editDiv.nativeElement.setAttribute("contentEditable",true);
 }
 ngAfterViewInit(){
   var len = this.pageHeaders.length;
+  this.maxlength = this.pageHeaders.length;
   let NewPage = this.pageHeaders.find((item,index)=>{
   return index==len-1
   })

@@ -1,25 +1,23 @@
 <div class="pageClass">
-  <nav mat-tab-nav-bar>
-    <div mat-tab-link *ngFor="let Page of notes.Pages" [routerLink]="['../pages', Page.id]"   routerLinkActive #rla="routerLinkActive"
-    [active]="rla.isActive">
-
-          <p>{{Page.Title}} {{Page.id}}</p>
+    <nav mat-tab-nav-bar>
+        <div #pageHeader mat-tab-link *ngFor="let Page of notes;index as i" [routerLink]="['../pages', Page.id]" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive" (dblclick)="editPageTitle(i)">
+            <p>{{Page.Title}} {{Page.id}}</p>
 
         </div>
 
 
-<div mat-tab-link>
+        <div mat-tab-link>
 
-              <mat-icon (click)="createPage($event)">add</mat-icon>
-          </div>
+            <mat-icon (click)="createPage($event)">add</mat-icon>
+        </div>
 
 
-        </nav>
-        <router-outlet>
+    </nav>
+    <router-outlet>
 
-        </router-outlet>
-<p>
-    <textarea rows="14" cols="50">Page works
+    </router-outlet>
+    <p>
+        <textarea rows="14" cols="50">Page works
     </textarea>
-</p>
+    </p>
 </div>

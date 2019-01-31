@@ -4,17 +4,16 @@ import {Notebook} from '../models/Notebook';
 import { Observable, BehaviorSubject,combineLatest } from 'rxjs';
 import { scan,map} from 'rxjs/operators';
 import { all } from 'q';
-
+import { AngularFirestore } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
 export class NoteService {
 allNotes:any;
 noteStream:any;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private db:AngularFirestore) {
     this.allNotes = new BehaviorSubject<Notebook[]>([]);
     this.noteStream=new BehaviorSubject<Notebook[]>([])
-    console.log("initialised");
     this.LoadNotes();
     this.allNotes.pipe(
       scan(this.accfunction)
@@ -25,8 +24,9 @@ notes =[];
 
 public  LoadNotes(){
 
-    this.http.get<Notebook[]>('/api/Notes')
-  .subscribe((Notes) => {
+  this.db.collection('Notes').valueChanges()
+  .subscribe((Notes) => { 
+    console.log(Notes)
     this.allNotes.next(Notes)});
   }
   public  getAllNotes(){
@@ -34,8 +34,13 @@ public  LoadNotes(){
   }
    getNotes(id):Observable<Notebook[]>{
     //  return this.allNotes.asObservable();
-
-  return this.http.get<Notebook[]>(`/api/Notes/${id}`)
+  return this.db.collection(`Notes/${id}/Pages`).valueChanges()
+  //return this.http.get<Notebook[]>(`/api/Notes/${id}`)
+  }
+     getNotesTest(id):Observable<Notebook[]>{
+    return this.allNotes.asObservable();
+  //return this.db.collection(`Notes/${id}/Pages`).valueChanges()
+  //return this.http.get<Notebook[]>(`/api/Notes/${id}`)
   }
   addNotes(noteData){
     console.log("adding");
@@ -58,6 +63,7 @@ public  LoadNotes(){
       return [...acc,curr]
     }
     else{
+      console.log(curr);
       return curr;
     }
 
